@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Calendar;
 
 public abstract class BaseTransaction implements TransactionInterface {
-    private final double amount;
+    private final int amount;
     private final Calendar date;
     private final String transactionID;
 
@@ -17,46 +17,35 @@ public abstract class BaseTransaction implements TransactionInterface {
      * Instialises the field, attributes of a transaction
      * Creates a object of this
      */
-    public BaseTransaction(double amount, @NotNull Calendar date)  {
+    public BaseTransaction(int amount, @NotNull Calendar date)  {
         this.amount = amount;
-        this.date = (Calendar) date.clone();//defensive copy of date
-        this.transactionID = generateTransactionID(date);
-    }
-    /**
-     * Generates a unique transaction ID based on the date and a random value
-     * @param date: The transaction date to be used for ID generation
-     * @return A unique transaction ID string
-     */
-    private String generateTransactionID(Calendar date) {
-        int uniq = (int) (Math.random() * 10000);
-        return date.getTime().toString() + "-" + uniq; // Combine date string and random number
+        this.date = (Calendar) date.clone();
+        int uniq = (int) Math.random()*10000;
+        transactionID = date.toString()+uniq;
     }
 
     /**
-     * Gets the transaction amount
-     * @return The transaction amount as double
+     * getAmount()
+     * @return integer
      */
     public double getAmount() {
-        return amount;
+        return amount; // Because we are dealing with Value types we need not worry about what we return
     }
 
     /**
-     * Gets the transaction date
-     * @return A defensive copy of the transaction date
+     * getDate()
+     * @return Calendar Object
      */
     public Calendar getDate() {
-        return (Calendar) date.clone(); // Defensive copying to avoid external modification
+//        return date;    // Because we are dealing with Reference types we need to judiciously copy what our getters return
+        return (Calendar) date.clone(); // Defensive copying or Judicious Copying
     }
 
-    /**
-     * Gets the unique transaction ID
-     * @return The transaction ID string
-     */
-    public String getTransactionID() {
-        return transactionID;
+    // Method to get a unique identifier for the transaction
+    public String getTransactionID(){
+        return  transactionID;
     }
-
-    // Abstract methods that must be implemented by subclasses
+    // Method to print a transaction receipt or details
     public abstract void printTransactionDetails();
     public abstract void apply(BankAccount ba);
 }

@@ -16,6 +16,7 @@ public interface TransactionInterface {
     // Method to get a unique identifier for the transaction
     String getTransactionID();
 
+    boolean reverse();
 }
 
 

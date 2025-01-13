@@ -1,7 +1,8 @@
-package Lecture4_interfaces_abstract_classes;
+package Assignment1;
 
 public class BankAccount {
     private double balance;
+
     public BankAccount(double balance) {
         this.balance = balance;
     }
@@ -10,7 +11,11 @@ public class BankAccount {
         return balance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
+    public void deposit(double amount) {
+        balance += amount;
+    }
+
+    public void withdraw(double amount) {
+        balance -= amount;
     }
 }
